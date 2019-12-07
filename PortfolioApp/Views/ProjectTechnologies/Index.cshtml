@@ -1,7 +1,7 @@
-﻿@model IEnumerable<PortfolioApp.Models.TechnologyProject>
+﻿@model IEnumerable<PortfolioApp.ViewModel.TechnologyProjectVM>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Portfolio Projects";
 }
 
 <h1>Index</h1>
@@ -9,7 +9,7 @@
 <p>
     <a asp-action="Create">Create New</a>
 </p>
-<table class="table">
+@*<table class="table">
     <thead>
         <tr>
             <th>
@@ -37,5 +37,24 @@
             </td>
         </tr>
 }
+    </tbody>
+</table>*@
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.Project.Title)</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.ActionLink(item.Project.Title, "Details", new { id = item.Project.ProjectId })
+                </td>
+            </tr>
+        }
     </tbody>
 </table>
