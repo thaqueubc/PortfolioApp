@@ -15,6 +15,9 @@ namespace PortfolioApp.Models
         public DbSet<Technology> Technologies { get; set; }
         public DbSet<Project> Projects { get; set; }
         public DbSet<TechnologyProject> TechnologyProjects { get; set; }
+        public DbSet<Company> Companies { get; set; }
+        public DbSet<InterviewRequest> InterviewRequests { get; set; }
+
 
         // override of parent DbContext's virtual method.
         protected override void OnModelCreating(ModelBuilder modelBuilder)
