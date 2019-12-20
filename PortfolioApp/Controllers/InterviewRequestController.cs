@@ -21,7 +21,10 @@ namespace PortfolioApp.Controllers
         }
         public IActionResult Index()
         {
-            return View();
+            InterviewRequestVMRepo irRepo = new InterviewRequestVMRepo(db);
+            IEnumerable<InterviewRequestVM> ir = irRepo.GetAll();
+            return View(ir);
+           
         }
 
         [HttpGet]
@@ -30,20 +33,15 @@ namespace PortfolioApp.Controllers
             return View();
         }
 
-        //[HttpGet]
-        //public ActionResult Edit(int employeeID, string branch)
-        //{
-        //    EmployeeStoreVMRepo esRepo = new EmployeeStoreVMRepo(db);
-        //    EmployeeStoreVM esVM = esRepo.Get(employeeID, branch);
-        //    return View(esVM);
-        //}
+        [HttpPost]
 
-        //public IActionResult Create()
-        //{
-        //  //  InterviewRequestVMRepo irRepo = new InterviewRequestVMRepo(db);
-        //  //  InterviewRequestVM irVM = 
-        //   //     irRepo.Create(irVM);
-        //   // return View(irVM);
-        //}
+        public IActionResult Create(InterviewRequestVM irVM)
+        {
+            InterviewRequestVMRepo irRepo = new InterviewRequestVMRepo(db);
+            irRepo.Create(irVM);
+
+            // go to index action method of the same controller.
+            return RedirectToAction("Index", "ProjectTechnologies");
+        }
     }
 }
