@@ -10,6 +10,8 @@ namespace PortfolioApp.Models
     public class Company
     {
         [Key, DatabaseGenerated(DatabaseGeneratedOption.None)]
+
+        public int CompanyId { get; set; }
         public string Name { get; set; }
         public string Contact { get; set; }
         public string Phone { get; set; }

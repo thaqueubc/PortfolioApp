@@ -33,7 +33,7 @@ namespace PortfolioApp
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
             var connection = Configuration.GetConnectionString("PortfolioConnection");
-            services.AddDbContext<PortfolioContext>(options => options.UseSqlServer(connection));
+            services.AddDbContext<PortfolioContext>(options => options.UseSqlite(connection));
 
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);

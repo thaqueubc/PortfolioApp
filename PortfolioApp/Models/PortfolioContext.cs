@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using PortfolioApp.ViewModel;
 
 namespace PortfolioApp.Models
 {
@@ -39,6 +40,10 @@ namespace PortfolioApp.Models
               .HasForeignKey(fk => new { fk.ProjectId })
               .OnDelete(DeleteBehavior.Restrict); // Prevent cascade delete
         }
+
+
+        // override of parent DbContext's virtual method.
+        public DbSet<PortfolioApp.ViewModel.InterviewRequestVM> InterviewRequestVM { get; set; }
 
     }
 
