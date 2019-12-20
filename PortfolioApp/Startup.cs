@@ -35,6 +35,7 @@ namespace PortfolioApp
             var connection = Configuration.GetConnectionString("PortfolioConnection");
             services.AddDbContext<PortfolioContext>(options => options.UseSqlite(connection));
 
+            services.Configure<EmailSettings>(Configuration.GetSection("EmailSettings"));
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }

@@ -51,6 +51,9 @@
         <partial name="_CookieConsentPartial" />
         <main role="main" class="pb-3">
             @RenderBody()
+            <br />
+            <hr />
+            <a asp-controller="Email" asp-action="Contact" class="btn btn-success">Send Email</a>
         </main>
     </div>
 
