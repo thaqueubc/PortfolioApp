@@ -31,14 +31,35 @@ else
     <a asp-controller="InterviewRequest" asp-action="Index">Request an Interview</a>
 </p>
 
+<form asp-action="Index" method="get">
+    <div class="form-actions no-color">
+        <p>
+            Search:
+            <input type="text" name="searchString" value="@ViewData["CurrentFilter"]"
+                   placeholder="Project or Technology..." />
+            <input type="submit" value="Search" class="btn btn-default" />
+        </p>
+    </div>
+</form>
 
 
 <table class="table">
     <thead>
         <tr>
-            <th>@Html.DisplayNameFor(model => model.Project.Title)</th>
-            <th><a asp-action="Index" asp-route-sortOrder=@ViewData["SortTitle"]>Title</a></th>
-            <th><a asp-action="Index" asp-route-sortOrder=@ViewData["SortDescription"]> Description</a></th>
+            <th><a asp-action="Index" class="glyphicon glyphicon-refresh">refresh</a></th>
+            <th>
+                <a asp-action="Index" asp-route-searchString="@ViewData["CurrentFilter"]"
+                   asp-route-sortOrder=@ViewData["SortTitle"]>
+                    Title
+                </a>
+            </th>
+            <th>
+                <a asp-action="Index" asp-route-searchString="@ViewData["CurrentFilter"]"
+                   asp-route-sortOrder=@ViewData["SortDescription"]>
+                    Description
+                </a>
+            </th>
+
         </tr>
     </thead>
     <tbody>
@@ -47,19 +68,17 @@ else
 
 
         <tr>
-            <td>
-                @Html.ActionLink(item.Project.Title, "Details", new { id = item.Project.ProjectId })
-            </td>
+            <td> </td>
 
             <td>
-                <a asp-action="Details" asp-route-id=@item.Project.ProjectId>@item.Project.Title</a>
+                @Html.ActionLink(item.Project.Title, "Details", new { id = item.Project.ProjectId })
             </td>
 
             <td>@item.Project.Description</td>
         </tr>
 
-       
 
-    }
-        </tbody>
-    </table>
+
+        }
+    </tbody>
+</table>

@@ -40,14 +40,27 @@ namespace PortfolioApp.Controllers
             return View(repo.GetDetails(id));
         }
 
-        public IActionResult Index(string sortOrder)
+        //public IActionResult Index(string sortOrder)
+        //{
+        //    string sort = String.IsNullOrEmpty(sortOrder) ? "title_asc" : sortOrder;
+        //    ViewData["CurrentSort"] = sort;
+        //    var technologyProject = new TechnologyProjectVMRepo(db).GetAll(sort);
+
+        //    return View(technologyProject);
+        //}
+
+        public IActionResult Index(string sortOrder, string searchString)
         {
             string sort = String.IsNullOrEmpty(sortOrder) ? "title_asc" : sortOrder;
+            string search = String.IsNullOrEmpty(searchString) ? "" : searchString;
             ViewData["CurrentSort"] = sort;
-            var technologyProject = new TechnologyProjectVMRepo(db).GetAll(sort);
+            ViewData["CurrentFilter"] = search;
 
+            var technologyProject =
+                new TechnologyProjectVMRepo(db).GetAll(sort,search);
             return View(technologyProject);
         }
+
 
     }
 }

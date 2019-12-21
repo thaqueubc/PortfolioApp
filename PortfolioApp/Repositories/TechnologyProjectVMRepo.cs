@@ -31,15 +31,28 @@ namespace PortfolioApp.Repositories
             return GetAll().FirstOrDefault(tp => tp.Project.ProjectId == id);
         }
 
-        public IQueryable<TechnologyProjectVM> GetAll(string sortOrder)
+        public IQueryable<TechnologyProjectVM> GetAll(string sortOrder, string searchString)
         {
-            var projectTechnologies =
-                db.Projects.Select(p => new TechnologyProjectVM
+            IQueryable<TechnologyProjectVM> projectTechnologies;
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                projectTechnologies = db.Projects.Select(p => new TechnologyProjectVM
                 {
                     Project = p,
                     Technologies = p.TechnologyProjects.Select(tp => tp.Technology)
-                }
-                );
+                })
+                    .Where(pt => pt.Project.Title.Contains(searchString)
+                    || pt.Technologies.Any(t => t.Name.Contains(searchString)));
+            }
+            else
+            {
+                projectTechnologies = db.Projects.Select(p => new TechnologyProjectVM
+                {
+                    Project = p,
+                    Technologies = p.TechnologyProjects.Select(tp => tp.Technology)
+                });
+            }
+
 
             switch (sortOrder)
             {
