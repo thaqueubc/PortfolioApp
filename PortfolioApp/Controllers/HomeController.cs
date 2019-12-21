@@ -19,7 +19,7 @@ namespace PortfolioApp.Controllers
         public HomeController(PortfolioContext db)
         {
             this.db = db;
-            Seeder seeder = new Seeder(db);
+           // Seeder seeder = new Seeder(db);
         }
 
         public IActionResult Index()

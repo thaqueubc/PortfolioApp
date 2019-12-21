@@ -13,17 +13,19 @@ namespace PortfolioApp.Controllers
     public class ProjectTechnologiesController : Controller
     {
         private PortfolioContext db;
+
+        private readonly PortfolioContext _context;
         public ProjectTechnologiesController(PortfolioContext db)
         {
             this.db = db;
         }
 
-        public IActionResult Index()
-        {
-            TechnologyProjectVMRepo repo = new TechnologyProjectVMRepo(db);
+        //public IActionResult Index()
+        //{
+        //    TechnologyProjectVMRepo repo = new TechnologyProjectVMRepo(db);
 
-            return View(repo.GetAll());
-        }
+        //    return View(repo.GetAll());
+        //}
 
         //This Index() method is used for Attribute Routing
         //public IActionResult Index()
@@ -37,5 +39,15 @@ namespace PortfolioApp.Controllers
             TechnologyProjectVMRepo repo = new TechnologyProjectVMRepo(db);
             return View(repo.GetDetails(id));
         }
+
+        public IActionResult Index(string sortOrder)
+        {
+            string sort = String.IsNullOrEmpty(sortOrder) ? "title_asc" : sortOrder;
+            ViewData["CurrentSort"] = sort;
+            var technologyProject = new TechnologyProjectVMRepo(db).GetAll(sort);
+
+            return View(technologyProject);
+        }
+
     }
 }
