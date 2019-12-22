@@ -1,4 +1,7 @@
-﻿@model IEnumerable<PortfolioApp.ViewModel.TechnologyProjectVM>
+﻿@model PaginatedList<PortfolioApp.ViewModel.TechnologyProjectVM>
+@*IEnumerable<PortfolioApp.ViewModel.TechnologyProjectVM>*@
+
+
 
 @{
     ViewData["Title"] = "Portfolio Projects";
@@ -26,9 +29,6 @@ else
 
 <p>
     <a asp-action="Create">Create New</a>
-
-    <br />
-    <a asp-controller="InterviewRequest" asp-action="Index">Request an Interview</a>
 </p>
 
 <form asp-action="Index" method="get">
@@ -46,7 +46,7 @@ else
 <table class="table">
     <thead>
         <tr>
-            <th><a asp-action="Index" class="glyphicon glyphicon-refresh">refresh</a></th>
+           @* <th><a asp-action="Index" class="glyphicon glyphicon-refresh">refresh</a></th>*@
             <th>
                 <a asp-action="Index" asp-route-searchString="@ViewData["CurrentFilter"]"
                    asp-route-sortOrder=@ViewData["SortTitle"]>
@@ -67,18 +67,40 @@ else
         {
 
 
-        <tr>
-            <td> </td>
+            <tr>
+                @*<td> </td>*@
 
-            <td>
-                @Html.ActionLink(item.Project.Title, "Details", new { id = item.Project.ProjectId })
-            </td>
+                <td>
+                    @Html.ActionLink(item.Project.Title, "Details", new { id = item.Project.ProjectId })
+                </td>
 
-            <td>@item.Project.Description</td>
-        </tr>
+                <td>@item.Project.Description</td>
+            </tr>
 
 
 
         }
     </tbody>
 </table>
+
+@* Following the list view table *@
+
+@{
+    var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
+    var nextDisabled = !Model.HasNextPage ? "disabled" : "";
+}
+
+<a asp-action="Index"
+   asp-route-sortOrder="@ViewData["CurrentSort"]"
+   asp-route-page="@(Model.PageIndex - 1)"
+   asp-route-searchString="@ViewData["CurrentFilter"]"
+   class="btn btn-default @prevDisabled">
+    Previous
+</a>
+<a asp-action="Index"
+   asp-route-sortOrder="@ViewData["CurrentSort"]"
+   asp-route-page="@(Model.PageIndex + 1)"
+   asp-route-searchString="@ViewData["CurrentFilter"]"
+   class="btn btn-default @nextDisabled">
+    Next
+</a>

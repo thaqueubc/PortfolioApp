@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using PortfolioApp.Models;
 using PortfolioApp.Repositories;
+using PortfolioApp.ViewModel;
 
 namespace PortfolioApp.Controllers
 {
@@ -49,17 +50,34 @@ namespace PortfolioApp.Controllers
         //    return View(technologyProject);
         //}
 
-        public IActionResult Index(string sortOrder, string searchString)
+        //public IActionResult Index(string sortOrder, string searchString)
+        //{
+        //    string sort = String.IsNullOrEmpty(sortOrder) ? "title_asc" : sortOrder;
+        //    string search = String.IsNullOrEmpty(searchString) ? "" : searchString;
+        //    ViewData["CurrentSort"] = sort;
+        //    ViewData["CurrentFilter"] = search;
+
+        //    var technologyProject =
+        //        new TechnologyProjectVMRepo(db).GetAll(sort,search);
+        //    return View(technologyProject);
+        //}
+
+        public IActionResult Index(string sortOrder, string searchString, int? page)
         {
             string sort = String.IsNullOrEmpty(sortOrder) ? "title_asc" : sortOrder;
             string search = String.IsNullOrEmpty(searchString) ? "" : searchString;
+
             ViewData["CurrentSort"] = sort;
             ViewData["CurrentFilter"] = search;
 
-            var technologyProject =
-                new TechnologyProjectVMRepo(db).GetAll(sort,search);
-            return View(technologyProject);
+            var projectTechnologies = new TechnologyProjectVMRepo(db).GetAll(sort, search);
+
+            int pageSize = 2;
+
+            return View(PaginatedList<TechnologyProjectVM>.Create(projectTechnologies
+                       , page ?? 1, pageSize));
         }
+
 
 
     }

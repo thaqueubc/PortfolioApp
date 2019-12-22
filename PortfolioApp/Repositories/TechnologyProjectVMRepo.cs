@@ -54,6 +54,7 @@ namespace PortfolioApp.Repositories
             }
 
 
+
             switch (sortOrder)
             {
                 case "description_asc":
